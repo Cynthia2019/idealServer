@@ -26,7 +26,8 @@ SECRET_KEY = "django-insecure-#3=z^p0albl62cv#=%=zz(3tqe5&54^22=v5wj0!(v!20revp3
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '*'
+    '*',
+    '.vercel.app'
 ]
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
@@ -87,12 +88,14 @@ WSGI_APPLICATION = "idealServer.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+DATABASES = {} 
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 
 
 # Password validation
