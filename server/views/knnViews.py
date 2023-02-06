@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .apps import ServerConfig
+from ..apps import ServerConfig
 
 # Create your views here.
 # endpoint calls like GET and POST get to directed here 

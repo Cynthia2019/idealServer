@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from server import views 
+from server.views import knnViews 
+from server.views import diversityViews
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("model/", views.call_model.as_view())
+    path("model/", knnViews.call_model.as_view()),
+    path("diversity/", diversityViews.call_diversity.as_view())
 ]
