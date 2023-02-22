@@ -33,7 +33,7 @@ class call_model(APIView):
             dir = os.path.dirname(os.path.realpath(__file__))
             path = dir + '/model'
             knn = pickle.load(open(path, 'rb'))
-            distances, neighbor_indices = knn.kneighbors(np.array(data, ndmin=2))
+            distances, neighbor_indices = knn.kneighbors(np.array(data, ndmin=2, dtype=float))
 
             return JsonResponse(neighbor_indices.tolist()[0], safe=False)
     
@@ -70,7 +70,7 @@ class call_model(APIView):
             # save the final model 
             def save_model(data, curr_path, n_neighbors=5): 
                 n_neighbors = 5
-                knn = NearestNeighbors(n_neighbors=n_neighbors, algorithm='ball_tree').fit(data[['C11', 'C12', 'C22', 'C16', 'C26', 'C66']])
+                knn = NearestNeighbors(n_neighbors=n_neighbors, algorithm='ball_tree').fit(data[['C11', 'C12', 'C22', 'C16', 'C26', 'C66']].values)
                 #save to bin 
                 knnModel = open(curr_path+'/model', 'wb')
                 pickle.dump(knn, knnModel)
