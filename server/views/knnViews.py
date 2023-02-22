@@ -21,6 +21,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+colorAssignment = [
+  "#FFB347", "#8A8BD0", "#FFC0CB", '#6FA8DC', '#8FCE00', '#CC0000', '#38761D', '#9FC5E8', '#2f3b45','#e8c29f'
+]
+
 class call_model(APIView): 
     
     def get(self, request): 
@@ -48,24 +52,32 @@ class call_model(APIView):
             for content in response: 
                 names.append(content['Key'])
 
-            for name in names: 
+            print(names)
+
+            for index, name in enumerate(names): 
                 response = s3.get_object(
                     Bucket='ideal-dataset-1', 
                     Key=name
                 )['Body']
-                df = pd.read_csv(io.BytesIO(response.read()), usecols=['C11', 'C12', 'C22', 'C16', 'C26', 'C66'])
-                total_df = pd.concat([total_df, df])
+                df = pd.read_csv(io.BytesIO(response.read()))
+                df['dataset_name'] = name
+                df['dataset_color'] = colorAssignment[index]
+                total_df = pd.concat([total_df, df], ignore_index=True)
             curr_path = os.path.realpath(os.path.dirname(__file__))
+
             
             # merge the data into one big df
             # save the final model 
             def save_model(data, curr_path, n_neighbors=5): 
                 n_neighbors = 5
-                knn = NearestNeighbors(n_neighbors=n_neighbors, algorithm='ball_tree').fit(data)
+                knn = NearestNeighbors(n_neighbors=n_neighbors, algorithm='ball_tree').fit(data[['C11', 'C12', 'C22', 'C16', 'C26', 'C66']])
                 #save to bin 
                 knnModel = open(curr_path+'/model', 'wb')
                 pickle.dump(knn, knnModel)
 
                 knnModel.close()
             save_model(total_df, curr_path, 5)
-            return JsonResponse(names, safe=False)
+
+            total_df.to_csv("total_df.csv")
+
+            return JsonResponse(total_df.to_json(orient="records"), safe=False)
