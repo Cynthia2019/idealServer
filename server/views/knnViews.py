@@ -35,7 +35,10 @@ class call_model(APIView):
             knn = pickle.load(open(path, 'rb'))
             distances, neighbor_indices = knn.kneighbors(np.array(data, ndmin=2, dtype=float))
 
-            return JsonResponse(neighbor_indices.tolist()[0], safe=False)
+            return JsonResponse({
+                'distances': distances.tolist()[0],
+                'indices': neighbor_indices.tolist()[0]
+            })
     
     def post(self, request): 
         if request.method == 'POST': 
