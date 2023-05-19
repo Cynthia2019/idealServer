@@ -2,3 +2,7 @@ server/data/
 .DS_Store
 Diversity_Sampling_Test/
 .env
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
