@@ -17,6 +17,7 @@ from sklearn.neighbors import NearestNeighbors
 import numpy as np 
 
 import boto3
+from botocore.config import Config
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -42,9 +43,19 @@ class call_model(APIView):
     
     def post(self, request): 
         if request.method == 'POST': 
+            config = Config(
+                region_name = os.getenv("AWS_DEFAULT_REGION"),
+                signature_version = 'v4',
+                retries = {
+                    'max_attempts': 10,
+                    'mode': 'standard'
+                }
+
+            )
             s3 = boto3.client('s3',
                 aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
-                aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY")
+                aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+                config=config
             )
             names = []
             # fetch all files in s3 
