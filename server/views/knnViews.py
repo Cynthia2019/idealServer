@@ -67,8 +67,6 @@ class call_model(APIView):
             for content in response: 
                 names.append(content['Key'])
 
-            print(names)
-
             for index, name in enumerate(names): 
                 response = s3.get_object(
                     Bucket='ideal-dataset-1', 
@@ -95,7 +93,7 @@ class call_model(APIView):
 
             total_df.to_csv("total_df.csv")
 
-            response = JsonResponse(total_df.to_json(orient="records"), status=200)
+            response = JsonResponse(total_df.to_json(orient="records"), status=200, safe=False)
             response['Access-Control-Allow-Origin'] = '*'
 
             return response
