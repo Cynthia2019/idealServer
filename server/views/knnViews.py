@@ -95,4 +95,7 @@ class call_model(APIView):
 
             total_df.to_csv("total_df.csv")
 
-            return JsonResponse(total_df.to_json(orient="records"), safe=False)
+            response = JsonResponse(total_df.to_json(orient="records"), status=200)
+            response['Access-Control-Allow-Origin'] = '*'
+
+            return response
