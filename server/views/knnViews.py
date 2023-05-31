@@ -17,6 +17,7 @@ from sklearn.neighbors import NearestNeighbors
 import numpy as np 
 
 import boto3
+from boto3 import Session
 from botocore.config import Config
 from dotenv import load_dotenv
 
