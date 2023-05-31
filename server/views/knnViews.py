@@ -64,6 +64,11 @@ class call_model(APIView):
             response = s3.list_objects(
                 Bucket='ideal-dataset-1', 
             )['Contents']
+            if not response: 
+                return JsonResponse({
+                    'error': 'No files in S3'
+                }, status=400)
+
             for content in response: 
                 names.append(content['Key'])
 
@@ -72,6 +77,11 @@ class call_model(APIView):
                     Bucket='ideal-dataset-1', 
                     Key=name
                 )['Body']
+                if not response: 
+                    return JsonResponse({
+                        'error': 'individual file not found'
+                    }, status=400)
+                    
                 df = pd.read_csv(io.BytesIO(response.read()))
                 df['dataset_name'] = name
                 df['dataset_color'] = colorAssignment[index]
