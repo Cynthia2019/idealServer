@@ -16,13 +16,7 @@ import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 import numpy as np 
 
-# import boto3
-# from boto3 import Session
-# from botocore.config import Config
 from server.aws import s3
-from dotenv import load_dotenv
-
-load_dotenv()
 
 colorAssignment = [
   "#FFB347", "#8A8BD0", "#FFC0CB", '#6FA8DC', '#8FCE00', '#CC0000', '#38761D', '#9FC5E8', '#2f3b45','#e8c29f'

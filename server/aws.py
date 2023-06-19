@@ -5,7 +5,7 @@ session = boto3.Session(
     profile_name='ideal-server-profile'
 )
 config = Config(
-    region_name = os.getenv("aws_default_region"),
+    region_name = 'us-east-2',
     signature_version = 'v4',
     retries = {
         'max_attempts': 10,
