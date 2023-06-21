@@ -88,6 +88,7 @@ class call_model(APIView):
 
             return response
         except Exception as e:
+            print(e)
             res = JsonResponse({
                 'error': str(e)
             }, status=500)

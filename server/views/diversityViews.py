@@ -73,8 +73,4 @@ class call_diversity(APIView):
             return response
 
         except Exception as e:
-            res = JsonResponse({
-                'error': str(e)
-            }, status=500)
-            res['Access-Control-Allow-Origin'] = '*'
-            return res
+            return HttpResponse(str(e), status=500)
