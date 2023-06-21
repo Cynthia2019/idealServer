@@ -32,10 +32,13 @@ class call_model(APIView):
             knn = pickle.load(open(path, 'rb'))
             distances, neighbor_indices = knn.kneighbors(np.array(data, ndmin=2, dtype=float))
 
-            return JsonResponse({
+            response = JsonResponse({
                 'distances': distances.tolist()[0],
                 'indices': neighbor_indices.tolist()[0]
-            })
+            }, status=200)
+            response['Access-Control-Allow-Origin'] = '*'
+
+            return response
     
     def post(self, request): 
         if request.method == 'POST': 
@@ -46,9 +49,11 @@ class call_model(APIView):
                 Bucket='ideal-dataset-1', 
             )['Contents']
             if not response: 
-                return JsonResponse({
+                res = JsonResponse({
                     'error': 'No files in S3'
                 }, status=400)
+                res['Access-Control-Allow-Origin'] = '*'
+                return res
 
             for content in response: 
                 names.append(content['Key'])
@@ -58,10 +63,12 @@ class call_model(APIView):
                     Bucket='ideal-dataset-1', 
                     Key=name
                 )['Body']
-                if not response: 
-                    return JsonResponse({
+                if not response:
+                    res = JsonResponse({
                         'error': 'individual file not found'
                     }, status=400)
+                    res['Access-Control-Allow-Origin'] = '*'
+                    return res
                     
                 df = pd.read_csv(io.BytesIO(response.read()))
                 df['dataset_name'] = name
