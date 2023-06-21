@@ -4,7 +4,6 @@
 import numpy as np
 from scipy.spatial.distance import pdist, squareform
 from scipy.io import loadmat, savemat
-import matplotlib.pyplot as plt
 import time
 
 exponent = 4

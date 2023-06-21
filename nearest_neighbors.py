@@ -7,7 +7,6 @@ from tqdm import tqdm
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
-import matplotlib.pyplot as plt
 plt.rcParams.update({'font.size': 18})
 import seaborn as sns
     

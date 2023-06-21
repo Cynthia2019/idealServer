@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from transform import transform
 import threading 
 import time
