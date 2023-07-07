@@ -1,6 +1,7 @@
 server/data/
 .DS_Store
 Diversity_Sampling_Test/
+env/
 .env
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
