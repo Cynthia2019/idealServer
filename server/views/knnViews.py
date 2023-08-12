@@ -12,7 +12,6 @@ import pickle
 import io 
 from pathlib import Path
 
-import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 import numpy as np 
 import json
