@@ -4,6 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework.views import APIView
 import json
 from ..scripts.DPPlibrary import *
+from scipy.spatial.distance import pdist, squareform
 
 import numpy as np
 
@@ -49,7 +50,7 @@ class call_diversity(APIView):
             D_feature = 3000  # for N(ground set) >= 10k, approximation must
             # be used to avoid too much overhead
             batch_size = 20  # for N(subset) >= 100, it's recommended to
-            # iterate with a small batch size (e.g., 200 = 20 iter x 10)
+            # iterate with a small batch size `(e.g., 200 = 20 iter x 10)
             if n_data <= 3000:  # greedy algorithm
                 C = decompose_kernel(squareform(pdist(prop)))
                 idx_abs = sample_k(C["D"], batch_size)
